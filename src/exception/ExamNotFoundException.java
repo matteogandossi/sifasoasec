@@ -1,5 +1,5 @@
 package exception;
 
-public class ExamNotFoundException {
+public class ExamNotFoundException extends Exception{
 
 }
