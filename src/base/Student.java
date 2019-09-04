@@ -37,5 +37,19 @@ public class Student {
 		return email;
 	}
 	
+	@Override
+	public String toString() {
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append("--------------\n");
+		sb.append("Matricola: " + matricola + "\n");
+		sb.append("Nome " + nome + " " + cognome + "\n");
+		sb.append("Data di nascita: " + dataDiNascita + "\n");
+		sb.append("Email " + email  + "\n");
+		sb.append("--------------\n");
+		
+		return sb.toString();
+		
+	}	
 
 }
