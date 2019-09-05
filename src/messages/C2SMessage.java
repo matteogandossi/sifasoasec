@@ -1,6 +1,8 @@
 package messages;
 
-public class C2SMessage {
+import java.io.Serializable;
+
+public class C2SMessage implements Serializable{
 	
 	private short type;
 	private String matricola, codice;

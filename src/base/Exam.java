@@ -1,6 +1,8 @@
 package base;
 
-public class Exam {
+import java.io.Serializable;
+
+public class Exam implements Serializable{
 	
 	private String codice;
 	private String titolo;

@@ -1,11 +1,12 @@
 package messages;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 import base.Exam;
 import base.Student;
 
-public class S2CMessage {
+public class S2CMessage implements Serializable{
 	
 	private short type;
 	private Student student;
