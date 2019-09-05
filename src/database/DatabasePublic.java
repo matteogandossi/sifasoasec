@@ -8,7 +8,7 @@ import java.sql.Statement;
 
 public class DatabasePublic {
 	
-	private static String url = "jdbc:mysql://localhost:3306/soasec_public_key?serverTimezone=UTC";
+	private static String url = "jdbc:mysql://localhost:3306/soasec_public_keys?serverTimezone=UTC";
 	private static String user = "root";
 	private static String password = "";
 	
@@ -29,7 +29,7 @@ public class DatabasePublic {
 			
 		} catch (SQLException e) {
 			
-			System.out.println("Opening Connection Error!");
+			System.out.println("Opening Connection to Public Error!");
 			System.exit(0);
 			return null;
 		}
@@ -54,7 +54,7 @@ public class DatabasePublic {
 		
 		int result = 0;
 		
-		String query = "INSERT INTO chiave"
+		String query = "INSERT INTO chiave "
 					+ "VALUES ('" + matricola + "','" + publicKey +  "')";
 		
 		try {

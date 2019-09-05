@@ -32,7 +32,7 @@ public class DatabaseSifa {
 			
 		} catch (SQLException e) {
 			
-			System.out.println("Opening Connection Error!");
+			System.out.println("Opening Connection to Sifa Error!");
 			System.exit(0);
 			return null;
 		}
@@ -156,6 +156,7 @@ public class DatabaseSifa {
 			pubResult = DatabasePublic.insertPublicKey(publicSt, stud.getMatricola(), publicKey);
 		} catch (SQLException e) {
 			System.out.println("Error Insert Student.");
+			e.printStackTrace();
 		}
 		
 		DatabasePublic.closeConnection(publicSt);
