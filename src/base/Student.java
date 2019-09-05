@@ -1,6 +1,8 @@
 package base;
 
-public class Student {
+import java.io.Serializable;
+
+public class Student implements Serializable {
 	
 	private String matricola;
 	private String nome, cognome;
