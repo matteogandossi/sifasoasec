@@ -1,0 +1,32 @@
+package controller;
+
+import base.Exam;
+import base.Student;
+import exception.ExamNotFoundException;
+import exception.StudentNotFoundException;
+import view.MailServerView;
+
+public class MailServerController {
+	
+	public static final short ISCRIZIONE = 1;
+	public static final short CANCELLAZIONE = 2;
+	
+	
+	public MailServerController() {}
+	
+	public void sendMail(short type, String matricola, String codice) {
+		
+		try {
+			Student student = UtilsController.getStudentByMatricola(matricola);
+			Exam exam = UtilsController.getExamByCodice(codice);
+			MailServerView.forgeMail(type, student, exam);
+			
+		} catch (StudentNotFoundException | ExamNotFoundException e) {
+			
+		}
+		
+	}
+	
+	
+
+}
