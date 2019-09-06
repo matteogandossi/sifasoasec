@@ -71,12 +71,40 @@ public class DatabaseSifa {
 		return result;
 	}
 	
+	public static ResultSet selectStudentByMatricola(Statement st, String matricola) {
+		
+		ResultSet result = null;
+		
+		try {
+			result = st.executeQuery("SELECT matricola, nome, cognome, dob, email FROM studente WHERE matricola = " + matricola);
+			
+		} catch (SQLException e) {
+			System.out.println("Error select student by matricola");
+		}
+		
+		return result;		
+	}
+	
 	public static ResultSet selectExams(Statement st) {
 		
 		ResultSet result = null;
 		
 		try {
 			result = st.executeQuery("SELECT * FROM esame");
+			
+		} catch (SQLException e) {
+			System.out.println("Error select esame by codice");
+		}
+		
+		return result;
+	}
+	
+	public static ResultSet selectExamByCodice(Statement st, String codice) {
+		
+		ResultSet result = null;
+		
+		try {
+			result = st.executeQuery("SELECT * FROM esame WHERE codice = " + codice);
 			
 		} catch (SQLException e) {
 			System.out.println("Error select esame");
