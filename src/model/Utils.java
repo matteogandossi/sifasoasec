@@ -1,20 +1,24 @@
-package controller;
+package model;
 
+import java.security.Key;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
 import base.Exam;
 import base.Student;
+import database.DatabasePublic;
 import database.DatabaseSifa;
 import exception.ExamNotFoundException;
+import exception.MissingKeyException;
 import exception.StudentNotFoundException;
+import rsa.KeyConverter;
 
-public class UtilsController {
+public class Utils {
 	
-	private UtilsController() {}
+	private Utils() {}
 	
-	protected static Student getStudentByMatricola(String matricola) throws StudentNotFoundException {
+	public static Student getStudentByMatricola(String matricola) throws StudentNotFoundException {
 		
 		Statement st = DatabaseSifa.connect();
 		
@@ -40,7 +44,7 @@ public class UtilsController {
 		
 	}
 	
-	protected static Exam getExamByCodice(String codice) throws ExamNotFoundException {
+	public static Exam getExamByCodice(String codice) throws ExamNotFoundException {
 		
 		Statement st = DatabaseSifa.connect();
 		
@@ -62,6 +66,26 @@ public class UtilsController {
 		DatabaseSifa.closeConnection(st);
 		
 		throw new ExamNotFoundException();
+		
+	}
+	
+	public static Key getPublicKey(String matricola) throws MissingKeyException {
+		
+		Statement st = DatabasePublic.connect();
+		
+		ResultSet rs = DatabasePublic.selectPubKey(st, matricola);
+		
+		try {
+			
+			if(rs.next()) {
+				
+				String publicKey = rs.getString("publicKey");
+				return KeyConverter.getPublicKeyFromString(publicKey);				
+			}
+			
+		} catch (SQLException e) {}
+		
+		throw new MissingKeyException();
 		
 	}
 
