@@ -76,7 +76,7 @@ public class DatabaseSifa {
 		ResultSet result = null;
 		
 		try {
-			result = st.executeQuery("SELECT matricola, nome, cognome, dob, email FROM studente WHERE matricola = " + matricola);
+			result = st.executeQuery("SELECT * FROM studente WHERE matricola = " + matricola);
 			
 		} catch (SQLException e) {
 			System.out.println("Error select student by matricola");

@@ -12,6 +12,7 @@ import javax.crypto.SealedObject;
 
 import base.Exam;
 import base.Student;
+import base.StudentComplete;
 import exception.MissingKeyException;
 import exception.StudentNotFoundException;
 import messages.C2SMessage;
@@ -23,7 +24,6 @@ import rsa.EncryptDecrypt;
 
 public class ClientHandler extends Thread {
 	
-	private Socket clientSocket;
 	private ObjectOutputStream oos;
 	private ObjectInputStream ois;
 	
@@ -32,7 +32,6 @@ public class ClientHandler extends Thread {
 	private String matricola;
 
 	public ClientHandler(Socket socket) {
-		clientSocket = socket;
 		logged = false;
 		try {
 			oos = new ObjectOutputStream(socket.getOutputStream());
@@ -66,7 +65,7 @@ public class ClientHandler extends Thread {
 				
 				try {
 					inputSO =  (SealedObject) ois.readObject();
-					question = (C2SMessage) EncryptDecrypt.decryptObject(inputSO, null);
+					question = (C2SMessage) EncryptDecrypt.decryptObject(inputSO, null); /// DA INSERIRE
 					answer = loggedMessage(question);
 					outputSO = EncryptDecrypt.encryptObject(answer, clientKey);
 					oos.writeObject(outputSO);
@@ -86,7 +85,7 @@ public class ClientHandler extends Thread {
 		if(question.getType() == Question.LOGIN) {
 			
 			try {
-				Student student = Utils.getStudentByMatricola(question.getMatricola());
+				StudentComplete student = Utils.getStudentByMatricola(question.getMatricola());
 				logged = true;
 				clientKey = Utils.getPublicKey(student.getMatricola());
 				matricola = student.getMatricola();

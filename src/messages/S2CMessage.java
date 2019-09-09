@@ -5,22 +5,23 @@ import java.util.ArrayList;
 
 import base.Exam;
 import base.Student;
+import base.StudentComplete;
 
 public class S2CMessage implements Serializable{
 	
 	private short type;
-	private Student student;
+	private StudentComplete student;
 	private ArrayList<Exam> list;
 	private String message;
 	
-	private S2CMessage(short type, Student student, ArrayList<Exam> list, String message) {
+	private S2CMessage(short type, StudentComplete student, ArrayList<Exam> list, String message) {
 		this.type = type;
 		this.student = student;
 		this.list = list;
 		this.message = message;
 	}
 	
-	public static S2CMessage createInitMessage(Student student) {
+	public static S2CMessage createInitMessage(StudentComplete student) {
 		return new S2CMessage(Answer.INIT, student, null, null);
 	}
 	
@@ -44,7 +45,7 @@ public class S2CMessage implements Serializable{
 		return type;
 	}
 	
-	public Student getStudent() {
+	public Student getStudentComplete() {
 		return student;
 	}
 	

@@ -7,6 +7,7 @@ import java.sql.Statement;
 
 import base.Exam;
 import base.Student;
+import base.StudentComplete;
 import database.DatabasePublic;
 import database.DatabaseSifa;
 import exception.ExamNotFoundException;
@@ -18,7 +19,7 @@ public class Utils {
 	
 	private Utils() {}
 	
-	public static Student getStudentByMatricola(String matricola) throws StudentNotFoundException {
+	public static StudentComplete getStudentByMatricola(String matricola) throws StudentNotFoundException {
 		
 		Statement st = DatabaseSifa.connect();
 		
@@ -32,8 +33,9 @@ public class Utils {
 				String cognome = rs.getString("cognome");
 				String dataDiNascita = rs.getString("dob");
 				String email = rs.getString("email");
+				String privateKey = rs.getString("privateKey");
 				
-				return new Student(matricola, nome, cognome, dataDiNascita, email);				
+				return new StudentComplete(matricola, nome, cognome, dataDiNascita, email, privateKey);				
 			}
 		
 		} catch (SQLException e) {}
