@@ -45,7 +45,7 @@ public class S2CMessage implements Serializable{
 		return type;
 	}
 	
-	public Student getStudentComplete() {
+	public StudentComplete getStudentComplete() {
 		return student;
 	}
 	
