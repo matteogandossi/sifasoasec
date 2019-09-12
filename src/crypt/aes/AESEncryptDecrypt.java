@@ -19,14 +19,7 @@ public class AESEncryptDecrypt {
 	
 	public AESEncryptDecrypt() {
 		
-		KeyGenerator keyGen;
-		try {
-			keyGen = KeyGenerator.getInstance(AESConstants.ALGORITHM);
-			keyGen.init(AESConstants.ALGORITHM_BITS);
-			aesKey = keyGen.generateKey();
-		} catch (NoSuchAlgorithmException e) {
-			System.out.println("Error AES generator");
-		}
+		generateNewKey();
 		
 	}
 	
@@ -75,6 +68,19 @@ public class AESEncryptDecrypt {
 		}
 		
 		return result;
+		
+	}
+
+	public void generateNewKey() {
+		
+		KeyGenerator keyGen;
+		try {
+			keyGen = KeyGenerator.getInstance(AESConstants.ALGORITHM);
+			keyGen.init(AESConstants.ALGORITHM_BITS);
+			aesKey = keyGen.generateKey();
+		} catch (NoSuchAlgorithmException e) {
+			System.out.println("Error AES generator");
+		}
 		
 	}
 	
