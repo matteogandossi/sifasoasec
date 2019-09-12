@@ -31,11 +31,13 @@ public class ClientMain {
 				switch (scelta) {
 				
 				case 1:
+					clientController.listaIscrivibili();
 					codice = ClientView.getCodiceEsame();
 					clientController.iscrizione(codice);					
 					break;
 					
 				case 2:
+					clientController.listaIscrizioni();
 					codice = ClientView.getCodiceEsame();
 					clientController.cancellazione(codice);
 					break;
