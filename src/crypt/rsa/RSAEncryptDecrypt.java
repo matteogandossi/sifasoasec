@@ -1,4 +1,4 @@
-package rsa;
+package crypt.rsa;
 
 import java.io.IOException;
 import java.io.Serializable;
@@ -12,9 +12,9 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.SealedObject;
 
-public class EncryptDecrypt {
+public class RSAEncryptDecrypt {
 	
-	private EncryptDecrypt() {}
+	private RSAEncryptDecrypt() {}
 	
 	public static SealedObject encryptObject(Serializable obj, Key publicKey) {
 		
@@ -22,7 +22,7 @@ public class EncryptDecrypt {
 		SealedObject sealedObject = null;
 		try {
 			
-			cipher = Cipher.getInstance(Constants.ALGORITHM);
+			cipher = Cipher.getInstance(RSAConstants.ALGORITHM);
 			cipher.init(Cipher.ENCRYPT_MODE, publicKey);
 			
 			sealedObject = new SealedObject(obj, cipher);
@@ -42,7 +42,7 @@ public class EncryptDecrypt {
 		
 		try {
 			
-			cipher = Cipher.getInstance(Constants.ALGORITHM);
+			cipher = Cipher.getInstance(RSAConstants.ALGORITHM);
 			cipher.init(Cipher.DECRYPT_MODE, privateKey);
 			
 			result = (Serializable) sealedObject.getObject(cipher);

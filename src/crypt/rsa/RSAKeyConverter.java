@@ -1,4 +1,4 @@
-package rsa;
+package crypt.rsa;
 
 import java.security.Key;
 import java.security.KeyFactory;
@@ -8,9 +8,9 @@ import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 
-public class KeyConverter {
+public class RSAKeyConverter {
 	
-	private KeyConverter() {}
+	private RSAKeyConverter() {}
 	
 	public static String keyToString(Key key) {
 		
@@ -30,7 +30,7 @@ public class KeyConverter {
 		KeyFactory keyFactory;
 		try {
 			
-			keyFactory = KeyFactory.getInstance(Constants.ALGORITHM);
+			keyFactory = KeyFactory.getInstance(RSAConstants.ALGORITHM);
 			X509EncodedKeySpec publicKeySpec = new X509EncodedKeySpec(encodedKey);
 			publicKey = keyFactory.generatePublic(publicKeySpec);
 			 
@@ -50,7 +50,7 @@ public class KeyConverter {
 		KeyFactory keyFactory;
 		try {
 			
-			keyFactory = KeyFactory.getInstance(Constants.ALGORITHM);
+			keyFactory = KeyFactory.getInstance(RSAConstants.ALGORITHM);
 			PKCS8EncodedKeySpec privateKeySpec = new PKCS8EncodedKeySpec(encodedKey);
 			privateKey = keyFactory.generatePrivate(privateKeySpec);
 			 
