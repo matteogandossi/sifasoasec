@@ -1,13 +1,18 @@
 package thread;
 
 
+import java.io.IOException;
+import java.net.ServerSocket;
+
 import controller.AdminController;
 import view.AdminView;
 
 public class AdminThread extends Thread {
 	
-	public AdminThread() {
-		
+	private ServerSocket serverSocket;
+	
+	public AdminThread(ServerSocket serverSocket) {
+		this.serverSocket = serverSocket;
 	}
 	
 	@Override
@@ -47,6 +52,11 @@ public class AdminThread extends Thread {
 			
 			
 		}while(scelta > 0);
+		
+		try {
+			serverSocket.close();
+		} catch (IOException e) {
+		}
 		
 	}
 

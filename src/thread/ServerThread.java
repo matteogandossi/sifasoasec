@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
+import java.security.Key;
+
+import model.ModelSifa;
 
 public class ServerThread extends Thread {
 	
@@ -11,6 +14,7 @@ public class ServerThread extends Thread {
 	public static final String ADDRESS = "localhost";
 	
 	private ServerSocket serverSocket;
+	private Key privateKeySifa;
 	
 	public ServerThread() {
 		try {
@@ -18,6 +22,7 @@ public class ServerThread extends Thread {
 		} catch (IOException e) {
 			System.out.println("Error server thread socket.");
 		}
+		privateKeySifa = ModelSifa.getPrivKeySifa();
 	}
 	
 	public ServerSocket getSocket() {
@@ -30,7 +35,7 @@ public class ServerThread extends Thread {
 			
 			try {
 				Socket socket = serverSocket.accept();
-				ClientHandler ch = new ClientHandler(socket);
+				ClientHandler ch = new ClientHandler(socket, privateKeySifa);
 				ch.start();
 			} catch (SocketException e) {
 				return;

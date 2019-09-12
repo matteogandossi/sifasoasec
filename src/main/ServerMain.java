@@ -1,13 +1,16 @@
 package main;
 
 import thread.AdminThread;
+import thread.ServerThread;
 
 public class ServerMain {
 
 	public static void main(String[] args) {
 		
-		AdminThread adm = new AdminThread();
+		ServerThread serverThread = new ServerThread();
+		AdminThread adm = new AdminThread(serverThread.getSocket());
 		adm.start();
+		serverThread.start();
 
 	}
 
