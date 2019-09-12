@@ -131,7 +131,8 @@ public class DatabaseSifa {
 		
 		ResultSet result = null;
 		String query = "SELECT esame.codice AS codice, titolo, docente, cfu "
-					+ "FROM  esame INNER JOIN iscrizione WHERE matricola = '" + matricola + "'";
+					+ "FROM  esame JOIN iscrizione ON esame.codice = iscrizione.codice "
+					+ "WHERE matricola = '" + matricola + "'";
 		
 		try {
 			result = st.executeQuery(query);
