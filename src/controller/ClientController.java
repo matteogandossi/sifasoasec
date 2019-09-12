@@ -17,7 +17,7 @@ import messages.C2SMessage;
 import messages.S2CMessage;
 import messages.constants.Answer;
 import model.Utils;
-import sifathread.ServerThread;
+import server.SifaPath;
 import view.ClientView;
 
 public class ClientController {
@@ -37,7 +37,7 @@ public class ClientController {
 		}		
 		
 		try {
-			socket = new Socket(ServerThread.ADDRESS, ServerThread.PORT);
+			socket = new Socket(SifaPath.ADDRESS, SifaPath.PORT);
 			ois = new ObjectInputStream(socket.getInputStream());
 			oos = new ObjectOutputStream(socket.getOutputStream());
 		} catch (IOException e) {

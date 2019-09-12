@@ -45,6 +45,7 @@ public class AESEncryptDecrypt {
 			
 		} catch (NoSuchAlgorithmException | NoSuchPaddingException | InvalidKeyException | IllegalBlockSizeException | IOException e) {
 			System.out.println("Error encrypting obj AES");
+			e.printStackTrace();
 		}
 		
 		return sealedObject;
