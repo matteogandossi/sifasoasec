@@ -1,5 +1,6 @@
 package model;
 
+import java.security.Key;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -8,9 +9,11 @@ import java.util.ArrayList;
 import base.Exam;
 import base.Iscrizione;
 import base.Student;
+import database.DatabasePrivate;
 import database.DatabaseSifa;
 import exception.ExamNotFoundException;
 import exception.StudentNotFoundException;
+import rsa.KeyConverter;
 
 public class ModelSifa {
 	
@@ -94,6 +97,40 @@ public class ModelSifa {
 		DatabaseSifa.closeConnection(st);
 		
 		return list;
+		
+	}
+	
+	public static Key getPrivKeySifa() {
+		
+		Statement st = DatabaseSifa.connect();
+		
+		ResultSet rs = DatabasePrivate.selectPrivateKeySifa(st);
+		
+		try {
+			rs.next();
+			String result = rs.getString("privateKey");
+			DatabaseSifa.closeConnection(st);
+			return KeyConverter.getPrivateKeyFromString(result);
+		} catch (SQLException e) {
+			System.out.println("Error priv Key");
+			return null;
+		}
+		
+	}
+	
+	public static Key getPrivKeyMail() {
+		
+		Statement st = DatabaseSifa.connect();
+		
+		ResultSet rs = DatabasePrivate.selectPrivateKeyMail(st);
+		
+		try {
+			rs.next();
+			return KeyConverter.getPrivateKeyFromString(rs.getString("privateKey"));
+		} catch (SQLException e) {
+			System.out.println("Error priv Key");
+			return null;
+		}
 		
 	}
 	
