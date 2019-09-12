@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 public class Exam implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8282507691086810127L;
 	private String codice;
 	private String titolo;
 	private String docente;

@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import base.Exam;
 import base.Iscrizione;
 import base.Student;
+import crypt.rsa.RSAKeyConverter;
+import crypt.rsa.RSAKeyGenerator;
 import model.ModelSifa;
-import rsa.KeyConverter;
-import rsa.KeyGenerator;
 import view.AdminView;
 
 public class AdminController {
@@ -18,9 +18,9 @@ public class AdminController {
 		
 		Student student = AdminView.getNewStudent();
 		
-		KeyGenerator keyGenerator = new KeyGenerator();
-		String publicKeyConverted = KeyConverter.keyToString(keyGenerator.getPublicKey());
-		String privateKeyConverted = KeyConverter.keyToString(keyGenerator.getPrivateKey());
+		RSAKeyGenerator rSAKeyGenerator = new RSAKeyGenerator();
+		String publicKeyConverted = RSAKeyConverter.keyToString(rSAKeyGenerator.getPublicKey());
+		String privateKeyConverted = RSAKeyConverter.keyToString(rSAKeyGenerator.getPrivateKey());
 		
 		boolean result = ModelSifa.insertNewStudent(student, privateKeyConverted, publicKeyConverted);	
 		AdminView.showResult(result);

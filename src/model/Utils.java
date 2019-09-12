@@ -6,14 +6,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import base.Exam;
-import base.Student;
 import base.StudentComplete;
+import crypt.rsa.RSAKeyConverter;
 import database.DatabasePublic;
 import database.DatabaseSifa;
 import exception.ExamNotFoundException;
 import exception.MissingKeyException;
 import exception.StudentNotFoundException;
-import rsa.KeyConverter;
 
 public class Utils {
 	
@@ -82,7 +81,7 @@ public class Utils {
 			if(rs.next()) {
 				
 				String publicKey = rs.getString("publicKey");
-				return KeyConverter.getPublicKeyFromString(publicKey);				
+				return RSAKeyConverter.getPublicKeyFromString(publicKey);				
 			}
 			
 		} catch (SQLException e) {}

@@ -4,6 +4,10 @@ import java.io.Serializable;
 
 public class C2SMessage implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7016437733794349847L;
 	private short type;
 	private String matricola, codice;
 	

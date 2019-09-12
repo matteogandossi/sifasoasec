@@ -1,18 +1,19 @@
 package thread;
 
+import java.io.EOFException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.net.SocketException;
 import java.security.Key;
 import java.util.ArrayList;
 
 import javax.crypto.SealedObject;
 
 import base.Exam;
-import base.Student;
 import base.StudentComplete;
+import crypt.aes.AESEncryptDecrypt;
+import crypt.rsa.RSAEncryptDecrypt;
 import exception.MissingKeyException;
 import exception.StudentNotFoundException;
 import messages.C2SMessage;
@@ -20,7 +21,6 @@ import messages.Question;
 import messages.S2CMessage;
 import model.ModelSifa;
 import model.Utils;
-import rsa.EncryptDecrypt;
 
 public class ClientHandler extends Thread {
 	
@@ -28,11 +28,12 @@ public class ClientHandler extends Thread {
 	private ObjectInputStream ois;
 	
 	private boolean logged;
-	private Key clientKey;
+	private Key clientKey, privateKeySifa;
 	private String matricola;
 
-	public ClientHandler(Socket socket) {
+	public ClientHandler(Socket socket, Key privateKeySifa) {
 		logged = false;
+		this.privateKeySifa = privateKeySifa;
 		try {
 			oos = new ObjectOutputStream(socket.getOutputStream());
 			ois = new ObjectInputStream(socket.getInputStream());
@@ -44,7 +45,11 @@ public class ClientHandler extends Thread {
 	@Override
 	public void run() {
 		
-		SealedObject inputSO, outputSO;
+		SealedObject inputSealedAESKey, inputSealedQuestion;
+		SealedObject outputSealedAESKey, outputSealedAnswer;
+		Key decryptedAESKey;
+		AESEncryptDecrypt aesConverter;
+		
 		C2SMessage question;
 		S2CMessage answer;
 		
@@ -56,21 +61,49 @@ public class ClientHandler extends Thread {
 					question = (C2SMessage) ois.readObject();
 					answer = notLoggedMessage(question);
 					oos.writeObject(answer);
+				} catch (EOFException e) {
+					return; //closed socket
 				} catch (ClassNotFoundException | IOException e) {
-					System.out.println("Error reading obj");
-				}				
+					System.out.println("Error reading obj (chiaro clienthandler)");
+					return;
+				}
 				
 			}
 			else { //messaggi criptati
 				
 				try {
-					inputSO =  (SealedObject) ois.readObject();
-					question = (C2SMessage) EncryptDecrypt.decryptObject(inputSO, null); /// DA INSERIRE
+					
+					//read sealed (by RSA) AES key and convert					
+					inputSealedAESKey = (SealedObject) ois.readObject();
+					decryptedAESKey = (Key) RSAEncryptDecrypt.decryptObject(inputSealedAESKey, privateKeySifa);
+					
+					//create AES object					
+					aesConverter = new AESEncryptDecrypt(decryptedAESKey);					
+					
+					//read sealed (by AES) message and convert
+					inputSealedQuestion = (SealedObject) ois.readObject();							
+					question = (C2SMessage) aesConverter.decryptObject(inputSealedQuestion);
+					
+					//forge answer
 					answer = loggedMessage(question);
-					outputSO = EncryptDecrypt.encryptObject(answer, clientKey);
-					oos.writeObject(outputSO);
+					
+					//create new AES object
+					aesConverter.generateNewKey();
+					
+					//seal AES key (with RSA) and send to client
+					outputSealedAESKey = RSAEncryptDecrypt.encryptObject(aesConverter.getAesKey(), clientKey);
+					oos.writeObject(outputSealedAESKey);
+					
+					//seal answer (with AES) and send to client
+					outputSealedAnswer = aesConverter.encryptObject(answer);
+					oos.writeObject(outputSealedAnswer);
+					
+				} catch (EOFException e) {
+					return; //closed socket
 				} catch (ClassNotFoundException | IOException e) {
-					System.out.println("Error reading obj");
+					System.out.println("Error reading obj(cripto clienthandler)");
+					e.printStackTrace();
+					return;
 				}	
 			}
 			
@@ -105,6 +138,7 @@ public class ClientHandler extends Thread {
 		ArrayList<Exam> list;
 		boolean result;
 		
+		//Controllo se l'utente richiedente è conforme al contenuto del messaggio
 		if(!question.getMatricola().equals(matricola))
 			return S2CMessage.createFailMessage("Matricola non conforme.");
 		

@@ -4,11 +4,14 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 import base.Exam;
-import base.Student;
 import base.StudentComplete;
 
 public class S2CMessage implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4076258183198827566L;
 	private short type;
 	private StudentComplete student;
 	private ArrayList<Exam> list;

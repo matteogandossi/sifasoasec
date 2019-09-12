@@ -76,7 +76,7 @@ public class DatabaseSifa {
 		ResultSet result = null;
 		
 		try {
-			result = st.executeQuery("SELECT * FROM studente WHERE matricola = " + matricola);
+			result = st.executeQuery("SELECT * FROM studente WHERE matricola = '" + matricola + "'");
 			
 		} catch (SQLException e) {
 			System.out.println("Error select student by matricola");
@@ -104,7 +104,7 @@ public class DatabaseSifa {
 		ResultSet result = null;
 		
 		try {
-			result = st.executeQuery("SELECT * FROM esame WHERE codice = " + codice);
+			result = st.executeQuery("SELECT * FROM esame WHERE codice = '" + codice + "'");
 			
 		} catch (SQLException e) {
 			System.out.println("Error select esame");
@@ -130,14 +130,14 @@ public class DatabaseSifa {
 	public static ResultSet selectEsamiIscitti(Statement st, String matricola) {
 		
 		ResultSet result = null;
-		String query = "SELECT matricola, codice, titolo, data_inserimento "
-					+ "FROM  iscrizione INNER JOIN esame WHERE matricola = '" + matricola + "'";
+		String query = "SELECT esame.codice AS codice, titolo, docente, cfu "
+					+ "FROM  esame INNER JOIN iscrizione WHERE matricola = '" + matricola + "'";
 		
 		try {
 			result = st.executeQuery(query);
 			
 		} catch (SQLException e) {
-			System.out.println("Error select students");
+			System.out.println("Error select esami iscritti for matricola " + matricola);
 		}
 		
 		return result;
@@ -153,7 +153,7 @@ public class DatabaseSifa {
 			result = st.executeQuery(query);
 			
 		} catch (SQLException e) {
-			System.out.println("Error select students");
+			System.out.println("Error select esami iscrivibili for matricola  " + matricola);
 		}
 		
 		return result;
