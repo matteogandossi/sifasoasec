@@ -17,7 +17,7 @@ import messages.Answer;
 import messages.C2SMessage;
 import messages.S2CMessage;
 import model.Utils;
-import thread.ServerThread;
+import sifathread.ServerThread;
 import view.ClientView;
 
 public class ClientController {

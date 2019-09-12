@@ -1,7 +1,7 @@
 package main;
 
-import thread.AdminThread;
-import thread.ServerThread;
+import sifathread.AdminThread;
+import sifathread.ServerThread;
 
 public class ServerMain {
 
