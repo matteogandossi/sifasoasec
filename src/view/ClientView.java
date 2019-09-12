@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import base.Exam;
-import messages.Answer;
 import messages.S2CMessage;
+import messages.constants.Answer;
 
 public class ClientView {
 	

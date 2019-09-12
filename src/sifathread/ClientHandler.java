@@ -17,8 +17,8 @@ import crypt.rsa.RSAEncryptDecrypt;
 import exception.MissingKeyException;
 import exception.StudentNotFoundException;
 import messages.C2SMessage;
-import messages.Question;
 import messages.S2CMessage;
+import messages.constants.Question;
 import model.ModelSifa;
 import model.Utils;
 

@@ -2,6 +2,8 @@ package messages;
 
 import java.io.Serializable;
 
+import messages.constants.Question;
+
 public class C2SMessage implements Serializable{
 	
 	/**

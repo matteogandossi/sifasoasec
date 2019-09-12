@@ -1,4 +1,4 @@
-package messages;
+package messages.constants;
 
 public class Answer {
 	

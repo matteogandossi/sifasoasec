@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import base.Exam;
 import base.StudentComplete;
+import messages.constants.Answer;
 
 public class S2CMessage implements Serializable{
 	
