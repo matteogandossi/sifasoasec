@@ -4,7 +4,7 @@ public class Mail {
 	
 	private Mail() {}
 	
-	public static short CANCELLAZIONE_ESAME = 1;
-	public static short ISCRIZIONE_ESAME = 2;
+	public static final short CANCELLAZIONE_ESAME = 1;
+	public static final short ISCRIZIONE_ESAME = 2;
 
 }

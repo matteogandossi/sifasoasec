@@ -7,12 +7,9 @@ import exception.StudentNotFoundException;
 import model.Utils;
 import view.MailServerView;
 
-public class MailServerController {
+public class MailServerController {	
 	
-	public static final short ISCRIZIONE = 1;
-	public static final short CANCELLAZIONE = 2;
-	
-	
+		
 	public MailServerController() {}
 	
 	public void sendMail(short type, String matricola, String codice) {

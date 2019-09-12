@@ -6,23 +6,31 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.security.Key;
 
+import crypt.rsa.RSAKeyConverter;
+import exception.MissingKeyException;
+import model.ModelPublic;
 import model.ModelSifa;
+import server.SifaPath;
 
 public class ServerThread extends Thread {
 	
-	public static final int PORT = 4000;
-	public static final String ADDRESS = "localhost";
 	
 	private ServerSocket serverSocket;
-	private Key privateKeySifa;
+	private Key privateKeySifa, publicKeyMail;
 	
 	public ServerThread() {
 		try {
-			serverSocket = new ServerSocket(PORT);
+			serverSocket = new ServerSocket(SifaPath.PORT);
 		} catch (IOException e) {
 			System.out.println("Error server thread socket.");
 		}
 		privateKeySifa = ModelSifa.getPrivKeySifa();
+		try {
+			publicKeyMail = RSAKeyConverter.getPublicKeyFromString(ModelPublic.getPublicKey("mail"));
+		} catch (MissingKeyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public ServerSocket getSocket() {
@@ -35,7 +43,7 @@ public class ServerThread extends Thread {
 			
 			try {
 				Socket socket = serverSocket.accept();
-				ClientHandler ch = new ClientHandler(socket, privateKeySifa);
+				ClientHandler ch = new ClientHandler(socket, privateKeySifa, publicKeyMail);
 				ch.start();
 			} catch (SocketException e) {
 				return;

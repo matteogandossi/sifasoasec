@@ -17,10 +17,13 @@ import crypt.rsa.RSAEncryptDecrypt;
 import exception.MissingKeyException;
 import exception.StudentNotFoundException;
 import messages.C2SMessage;
+import messages.MailMessage;
 import messages.S2CMessage;
+import messages.constants.Mail;
 import messages.constants.Question;
 import model.ModelSifa;
 import model.Utils;
+import server.MailPath;
 
 public class ClientHandler extends Thread {
 	
@@ -28,12 +31,13 @@ public class ClientHandler extends Thread {
 	private ObjectInputStream ois;
 	
 	private boolean logged;
-	private Key clientKey, privateKeySifa;
+	private Key publicClientKey, privateKeySifa, publicKeyMail;
 	private String matricola;
 
-	public ClientHandler(Socket socket, Key privateKeySifa) {
+	public ClientHandler(Socket socket, Key privateKeySifa, Key publicKeyMail) {
 		logged = false;
 		this.privateKeySifa = privateKeySifa;
+		this.publicKeyMail = publicKeyMail;
 		try {
 			oos = new ObjectOutputStream(socket.getOutputStream());
 			ois = new ObjectInputStream(socket.getInputStream());
@@ -91,7 +95,7 @@ public class ClientHandler extends Thread {
 					aesConverter.generateNewKey();
 					
 					//seal AES key (with RSA) and send to client
-					outputSealedAESKey = RSAEncryptDecrypt.encryptObject(aesConverter.getAesKey(), clientKey);
+					outputSealedAESKey = RSAEncryptDecrypt.encryptObject(aesConverter.getAesKey(), publicClientKey);
 					oos.writeObject(outputSealedAESKey);
 					
 					//seal answer (with AES) and send to client
@@ -120,7 +124,7 @@ public class ClientHandler extends Thread {
 			try {
 				StudentComplete student = Utils.getStudentByMatricola(question.getMatricola());
 				logged = true;
-				clientKey = Utils.getPublicKey(student.getMatricola());
+				publicClientKey = Utils.getPublicKey(student.getMatricola());
 				matricola = student.getMatricola();
 				return S2CMessage.createInitMessage(student);
 				
@@ -157,14 +161,18 @@ public class ClientHandler extends Thread {
 			
 			case Question.ISCRIZIONE:
 				result = ModelSifa.insertNewIscrizione(question.getMatricola(), question.getCodice());
-				if(result)
-					return S2CMessage.createOkMessage();
+				if(result) {
+					sendMail(Mail.ISCRIZIONE_ESAME, question.getMatricola(), question.getCodice());
+					return S2CMessage.createOkMessage();					
+				}					
 				return S2CMessage.createFailMessage("Iscrizione non effettuata.");
 			
 			case Question.CANCELLAZIONE:
 				result = ModelSifa.deleteIscrizione(question.getMatricola(), question.getCodice());
-				if(result)
-					return S2CMessage.createOkMessage();
+				if(result) {
+					sendMail(Mail.CANCELLAZIONE_ESAME, question.getMatricola(), question.getCodice());
+					return S2CMessage.createOkMessage();					
+				}
 				return S2CMessage.createFailMessage("Cancellazione non effettuata.");
 			
 			case Question.LOGOUT:
@@ -175,7 +183,50 @@ public class ClientHandler extends Thread {
 				return S2CMessage.createFailMessage("Operazione sconosciuta.");	
 			
 		}
-	}	
+	}
+	
+	private void sendMail(short type, String matricola, String codice) {
+		
+		MailMessage mailMessage = null;
+		
+		switch (type) {
+		
+			case Mail.ISCRIZIONE_ESAME:
+				mailMessage = MailMessage.createIscrizioneMail(matricola, codice);
+				break;
+				
+			case Mail.CANCELLAZIONE_ESAME:
+				mailMessage = MailMessage.createCancellazioneMail(matricola, codice);
+				break;
+	
+			default:
+				break;
+		}
+		
+		try {
+			Socket socket = new Socket(MailPath.ADDRESS, MailPath.PORT);
+			ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+			
+			AESEncryptDecrypt aesConverter = new AESEncryptDecrypt();
+			
+			//seal AES key (with RSA) and send to client
+			SealedObject outputSealedAESKey = RSAEncryptDecrypt.encryptObject(aesConverter.getAesKey(), publicKeyMail);
+			oos.writeObject(outputSealedAESKey);
+			
+			//seal answer (with AES) and send to client
+			SealedObject outputSealedMail = aesConverter.encryptObject(mailMessage);
+			oos.writeObject(outputSealedMail);
+			
+			socket.close();
+			
+		} catch (IOException e) {
+			
+			System.out.println("error send mail");
+			e.printStackTrace();
+			
+		}
+		
+	}
 	
 
 }
