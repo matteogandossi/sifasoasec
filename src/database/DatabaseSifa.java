@@ -224,7 +224,7 @@ public class DatabaseSifa {
 		try {
 			result = st.executeUpdate(query);			
 		} catch (SQLException e) {
-			System.out.println("Error Insert Iscrizione.");
+			//System.out.println("Error Insert Iscrizione.");
 		}
 		
 		return (result > 0);
