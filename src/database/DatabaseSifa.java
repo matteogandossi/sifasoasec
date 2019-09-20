@@ -11,6 +11,7 @@ import base.Student;
 
 public class DatabaseSifa {
 	
+	
 	private static String url = "jdbc:mysql://localhost:3306/soasec_sifa?serverTimezone=UTC";
 	private static String user = "root";
 	private static String password = "";

@@ -11,7 +11,6 @@ public class ServerMain {
 		AdminThread adm = new AdminThread(serverThread.getSocket());
 		adm.start();
 		serverThread.start();
-
 	}
 
 }

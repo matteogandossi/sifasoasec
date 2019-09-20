@@ -6,6 +6,7 @@ import messages.constants.Mail;
 
 public class MailServerView {
 	
+	
 	private MailServerView() {}
 	
 	public static void forgeMail(short type, Student student, Exam exam) {

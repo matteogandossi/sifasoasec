@@ -12,6 +12,7 @@ import view.AdminView;
 
 public class AdminController {
 	
+	
 	private AdminController() {}
 	
 	public static void addNewStudent() {

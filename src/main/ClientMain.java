@@ -8,9 +8,10 @@ public class ClientMain {
 	public static void main(String[] args) {
 		
 		int scelta;
-		boolean logged = false;
+		boolean logged = false, listNotEmpty;
 		String matricola, codice;
 		ClientController clientController = new ClientController();
+		
 		
 		do {
 			
@@ -31,15 +32,25 @@ public class ClientMain {
 				switch (scelta) {
 				
 				case 1:
-					clientController.listaIscrivibili();
-					codice = ClientView.getCodiceEsame();
-					clientController.iscrizione(codice);					
+					listNotEmpty = clientController.listaIscrivibili();
+					if(listNotEmpty) {
+						codice = ClientView.getCodiceEsame();
+						clientController.iscrizione(codice);
+					}
+					else
+						System.out.println("Nessuna iscrizione possibile.");
+										
 					break;
 					
 				case 2:
-					clientController.listaIscrizioni();
-					codice = ClientView.getCodiceEsame();
-					clientController.cancellazione(codice);
+					listNotEmpty = clientController.listaIscrizioni();
+					if(listNotEmpty) {
+						codice = ClientView.getCodiceEsame();
+						clientController.cancellazione(codice);
+					}
+					else
+						System.out.println("Nessuna cancellazione possibile.");
+					
 					break;
 				
 				case 3:

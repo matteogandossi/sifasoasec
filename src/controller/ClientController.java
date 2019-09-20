@@ -22,6 +22,7 @@ import view.ClientView;
 
 public class ClientController {
 	
+	
 	private ObjectOutputStream oos;
 	private ObjectInputStream ois;
 	private Socket socket;
@@ -157,7 +158,7 @@ public class ClientController {
 		
 	}
 
-	public void listaIscrivibili() {
+	public boolean listaIscrivibili() {
 
 		S2CMessage response = sendAndReceiveCrypted(C2SMessage.createListaIscrizioneMessage(student.getMatricola()));
 		
@@ -168,9 +169,11 @@ public class ClientController {
 		else
 			System.out.println(ClientView.getMessageOutcome(response));
 		
+		return response.getList().size()>0;
+		
 	}
 
-	public void listaIscrizioni() {
+	public boolean listaIscrizioni() {
 		
 		S2CMessage response = sendAndReceiveCrypted(C2SMessage.createListaCancellazioneMessage(student.getMatricola()));
 		
@@ -180,6 +183,8 @@ public class ClientController {
 		}
 		else
 			System.out.println(ClientView.getMessageOutcome(response));
+		
+		return response.getList().size()>0;
 		
 	}
 

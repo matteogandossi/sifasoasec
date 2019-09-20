@@ -30,6 +30,7 @@ public class ClientHandler extends Thread {
 	private ObjectOutputStream oos;
 	private ObjectInputStream ois;
 	
+	
 	private boolean logged;
 	private Key publicClientKey, privateKeySifa, publicKeyMail;
 	private String matricola;

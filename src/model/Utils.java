@@ -16,6 +16,7 @@ import exception.StudentNotFoundException;
 
 public class Utils {
 	
+	
 	private Utils() {}
 	
 	public static StudentComplete getStudentByMatricola(String matricola) throws StudentNotFoundException {

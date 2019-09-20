@@ -4,10 +4,6 @@ import java.io.Serializable;
 
 public class Student implements Serializable {
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -4435141978473332541L;
 	private String matricola;
 	private String nome, cognome;
 	private String dataDiNascita;

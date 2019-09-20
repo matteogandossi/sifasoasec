@@ -8,6 +8,7 @@ import java.sql.Statement;
 
 public class DatabasePublic {
 	
+
 	private static String url = "jdbc:mysql://localhost:3306/soasec_public_keys?serverTimezone=UTC";
 	private static String user = "root";
 	private static String password = "";

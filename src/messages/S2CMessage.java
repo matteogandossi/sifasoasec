@@ -9,10 +9,7 @@ import messages.constants.Answer;
 
 public class S2CMessage implements Serializable{
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 4076258183198827566L;
+	
 	private short type;
 	private StudentComplete student;
 	private ArrayList<Exam> list;

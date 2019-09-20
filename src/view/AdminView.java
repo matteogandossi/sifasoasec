@@ -9,6 +9,7 @@ import base.Student;
 
 public class AdminView {
 	
+	
 	private static Scanner scanner = new Scanner(System.in);
 	
 	private AdminView() {}

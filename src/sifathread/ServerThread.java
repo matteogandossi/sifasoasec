@@ -13,8 +13,7 @@ import model.ModelSifa;
 import server.SifaPath;
 
 public class ServerThread extends Thread {
-	
-	
+		
 	private ServerSocket serverSocket;
 	private Key privateKeySifa, publicKeyMail;
 	

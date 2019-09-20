@@ -8,6 +8,7 @@ public class Answer {
 	public static final short ESAMI_DISPONIBILI = 3;
 	public static final short ESAMI_CANCELLABILI = 4;
 	
+	
 	private Answer() {}
 
 }

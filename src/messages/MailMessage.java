@@ -7,10 +7,7 @@ import messages.constants.Mail;
 
 public class MailMessage implements Serializable{
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -2106038318539926739L;
+	
 	private short type;
 	private Iscrizione iscrizione;
 	

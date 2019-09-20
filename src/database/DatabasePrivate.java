@@ -8,6 +8,7 @@ public class DatabasePrivate {
 	
 	private DatabasePrivate() {}
 	
+	
 	public static ResultSet selectPrivateKeySifa(Statement st) {
 		
 		ResultSet result = null;

@@ -9,6 +9,7 @@ import messages.constants.Answer;
 
 public class ClientView {
 	
+	
 	private static Scanner scanner = new Scanner(System.in);
 	
 	private ClientView() {}

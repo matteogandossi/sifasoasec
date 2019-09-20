@@ -6,5 +6,4 @@ public class SifaPath {
 	public static final String ADDRESS = "localhost";
 	
 	private SifaPath() {}
-
 }

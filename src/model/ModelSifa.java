@@ -19,6 +19,7 @@ public class ModelSifa {
 	
 	private ModelSifa() {}
 	
+	
 	/**
 	 * 	
 	 * SELECT

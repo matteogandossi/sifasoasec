@@ -8,8 +8,7 @@ import model.Utils;
 import view.MailServerView;
 
 public class MailServerController {	
-	
-		
+			
 	public MailServerController() {}
 	
 	public void sendMail(short type, String matricola, String codice) {

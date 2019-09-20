@@ -11,6 +11,7 @@ public class ModelPublic {
 	
 	private ModelPublic() {}
 	
+	
 	public static String getPublicKey(String matricola) throws MissingKeyException {
 		
 		Statement st = DatabasePublic.connect();

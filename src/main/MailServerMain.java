@@ -90,6 +90,7 @@ public class MailServerMain {
 		
 		MailServerView.forgeMail(message.getType(), student, exam);
 		
+		
 	}
 
 }
